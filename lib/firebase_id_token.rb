@@ -22,7 +22,7 @@ module FirebaseIDToken
     include MonitorMixin
 
     def initialize(project_id:, redis_url:)
-      FirebaseIdToken.configure do |config|
+      ::FirebaseIdToken.configure do |config|
         config.project_ids = [project_id]
         config.redis = Redis.new(url: redis_url)
       end
@@ -35,9 +35,9 @@ module FirebaseIDToken
     # @return [Hash] The decoded ID token
     def check(token)
       payload = begin
-                  FirebaseIdToken::Signature.verify(token)
-                rescue FirebaseIdToken::Exceptions::NoCertificatesError
-                  FirebaseIdToken::Certificates.request!
+                  ::FirebaseIdToken::Signature.verify(token)
+                rescue ::FirebaseIdToken::Exceptions::NoCertificatesError
+                  ::FirebaseIdToken::Certificates.request!
                   check(token)
                 end
 
