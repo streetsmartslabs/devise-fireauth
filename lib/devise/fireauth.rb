@@ -7,7 +7,7 @@ require_relative "../firebase_id_token"
 module Devise
   def self.fireauth
     yield(Devise::Fireauth.config)
-    Devise::Fireauth.firebase_validator = FirebaseIDToken::Validator.new(aud: Devise::Fireauth.project_id)
+    Devise::Fireauth.firebase_validator = FirebaseIDToken::Validator.new(project_id: Devise::Fireauth.project_id, redis_url: Devise::Fireauth.redis_url)
   end
 
   module Fireauth
@@ -16,7 +16,7 @@ module Devise
     setting :api_key, reader: true
     setting :token_key, :id_token, reader: true
     setting :project_id, reader: true
-    setting :redis, reader: true
+    setting :redis_url, reader: true
 
     # Firebase Validator
     mattr_accessor :firebase_validator
