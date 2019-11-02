@@ -2,12 +2,12 @@
 require "devise"
 require "dry-configurable"
 require "devise/fireauth/version"
-require_relative "../firebase_id_token"
+require_relative "../firebase"
 
 module Devise
   def self.fireauth
     yield(Devise::Fireauth.config)
-    Devise::Fireauth.firebase_validator = FirebaseIDToken::Validator.new(project_id: Devise::Fireauth.project_id, redis_url: Devise::Fireauth.redis_url)
+    Devise::Fireauth.firebase_validator = Firebase::Validator.new(project_id: Devise::Fireauth.project_id, redis_url: Devise::Fireauth.redis_url)
   end
 
   module Fireauth
