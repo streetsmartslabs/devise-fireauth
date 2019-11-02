@@ -16,6 +16,7 @@ module Devise
     setting :api_key, reader: true
     setting :token_key, :id_token, reader: true
     setting :project_id, reader: true
+    setting :redis, reader: true
 
     # Firebase Validator
     mattr_accessor :firebase_validator
