@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 require "devise"
 require "dry-configurable"
+require "firebase_id_token"
 require "devise/fireauth/version"
 require_relative "../firebase"
 
@@ -42,4 +43,9 @@ module Devise
   end
   add_module :firebase_authenticatable,
     controller: :sessions, route: { session: :routes }
+end
+
+FirebaseIdToken.configure do |config|
+  config.project_ids = [Devise::Fireauth.project_id]
+  config.redis = Redis.new(url: Devise::Fireauth.redis_url)
 end

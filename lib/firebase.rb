@@ -22,10 +22,6 @@ module Firebase
     include MonitorMixin
 
     def initialize(project_id:, redis_url:)
-      FirebaseIdToken.configure do |config|
-        config.project_ids = [project_id]
-        config.redis = Redis.new(url: redis_url)
-      end
       super()
     end
 
